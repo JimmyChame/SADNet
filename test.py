@@ -13,13 +13,9 @@ import argparse
 
 parser = argparse.ArgumentParser(description='SADNET')
 # File paths
-# parser.add_argument('--gt_src_path', type=str, default="./dataset/test/",
-#                     help='testing clear image path, if not, set None')
-# parser.add_argument('--noise_src_path', type=str, default="./dataset/test/color_sig50/",
-#                     help='testing noisy image path')
-parser.add_argument('--gt_src_path', type=str, default="/hdd4T_2/",
+parser.add_argument('--gt_src_path', type=str, default="./dataset/test/",
                     help='testing clear image path, if not, set None')
-parser.add_argument('--noise_src_path', type=str, default="/hdd4T_1/cm/codes/DataSet/NoiseData/sig50/",
+parser.add_argument('--noise_src_path', type=str, default="./dataset/test/color_sig50/",
                     help='testing noisy image path')
 parser.add_argument('--test_items', default=["CBSD68", "Kodak24"],
                     help='testing dataset')
