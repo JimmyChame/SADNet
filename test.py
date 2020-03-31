@@ -99,7 +99,7 @@ def evaluate_net():
 
             rgb = np.uint8(rgb*255)
             # save image
-            #imwrite(dst_png_path_list[i] + img_name + ".png", rgb)
+            imwrite(dst_png_path_list[i] + img_name + ".png", rgb)
 
             if args.gt_src_path:
                 clean = np.uint8(clean*255)
