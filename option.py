@@ -2,15 +2,10 @@ import argparse
 
 parser = argparse.ArgumentParser(description='SADNET')
 # File paths
-# parser.add_argument('--src_path', type=str, default="./dataset/train/DIV2K_h5/train.h5",
-#                     help='training dataset path')
-# parser.add_argument('--val_path', type=str, default="./dataset/test/color_sig50/valid.h5",
-#                     help='validating dataset path, if not, set None')
-parser.add_argument('--src_path', type=str, default="/ssd2T_3/DIV2K_h5/train.h5",
+parser.add_argument('--src_path', type=str, default="./dataset/train/DIV2K_h5/train.h5",
                     help='training dataset path')
-parser.add_argument('--val_path', type=str, default="/hdd4T_1/cm/codes/DataSet/NoiseData/sig50/valid.h5",
+parser.add_argument('--val_path', type=str, default="./dataset/test/color_sig50/valid.h5",
                     help='validating dataset path, if not, set None')
-
 parser.add_argument('--ckpt_dir', type=str, default="./ckpt/SADNET_color_sig50/",
                     help='model directory')
 parser.add_argument('--log_dir', type=str, default="./log/SADNET_color_sig50/",
