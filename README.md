@@ -1,5 +1,6 @@
 # SADNet
-By Meng Chang, Qi Li, Huajun Feng, Zhihai Xu 
+By Meng Chang, Qi Li, Huajun Feng, Zhihai Xu
+
 This is the official Pytorch implementation of "Spatial-Adaptive Network for Single Image Denoising" [[Paper]](https://arxiv.org/abs/2001.10291)
 
 ## Prerequisites
@@ -10,6 +11,7 @@ This is the official Pytorch implementation of "Spatial-Adaptive Network for Sin
 ## Get Started
 ### Installation
 The Deformable ConvNets V2 (DCNv2) module in our code adopts  [chengdazhi's implementation](https://github.com/chengdazhi/Deformable-Convolution-V2-PyTorch).
+
 Please make sure your machine has a GPU, which is required for the DCNv2 module.
 
 ### Train
