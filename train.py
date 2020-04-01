@@ -104,7 +104,6 @@ def train():
                 writer.add_scalar('learning rate', optimizer.param_groups[0]['lr'], epoch)
         # save model
         if epoch % args.save_epoch == 0:
-            #torch.save(model, os.path.join(args.ckpt_dir, 'model_%04d.pth' % (epoch+1)))
             if torch.cuda.device_count() > 1:
                 torch.save(model.module.state_dict(), os.path.join(args.ckpt_dir, 'model_%04d_dict.pth' % (epoch+1)))
             else:
