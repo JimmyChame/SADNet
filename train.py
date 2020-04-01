@@ -41,14 +41,14 @@ def train():
         input_channel, output_channel = 1, 1
     else:
         input_channel, output_channel = 3, 3
-    #model = args.NetName(input_channel, output_channel, args.n_channel, args.offset_channel)
+
     model = make_model(input_channel, output_channel, args)
     model.initialize_weights()
 
     if args.finetune:
-        #model = torch.load(args.ckpt_dir+'model_%04d.pth' % args.init_epoch)
-        model_dict = torch.load(args.ckpt_dir+'model_%04d.pth' % args.init_epoch).module.state_dict()
+        model_dict = torch.load(args.ckpt_dir+'model_%04d_dict.pth' % args.init_epoch)
         model.load_state_dict(model_dict)
+
 
     if args.t_loss == 'L2':
         criterion = torch.nn.MSELoss()
@@ -73,7 +73,7 @@ def train():
 
         loss_sum = 0
         step_lr_adjust(optimizer, epoch, init_lr=args.lr, step_size=args.milestone, gamma=args.gamma)
-        print('Epoch {}, lr {}'.format(epoch, optimizer.param_groups[0]['lr']))
+        print('Epoch {}, lr {}'.format(epoch+1, optimizer.param_groups[0]['lr']))
         start_time = time.time()
         for i, data in enumerate(dataloader):
             input, label = data
@@ -104,7 +104,11 @@ def train():
                 writer.add_scalar('learning rate', optimizer.param_groups[0]['lr'], epoch)
         # save model
         if epoch % args.save_epoch == 0:
-            torch.save(model, os.path.join(args.ckpt_dir, 'model_%04d.pth' % (epoch+1)))
+            #torch.save(model, os.path.join(args.ckpt_dir, 'model_%04d.pth' % (epoch+1)))
+            if torch.cuda.device_count() > 1:
+                torch.save(model.module.state_dict(), os.path.join(args.ckpt_dir, 'model_%04d_dict.pth' % (epoch+1)))
+            else:
+                torch.save(model.state_dict(), os.path.join(args.ckpt_dir, 'model_%04d_dict.pth' % (epoch+1)))
 
         # validation
         if args.val_path:
