@@ -56,5 +56,19 @@ parser.add_argument('--n_channel', type=int, default=32,
 parser.add_argument('--offset_channel', type=int, default=32,
                     help='number of offset channels')
 
+# test
+# File paths
+parser.add_argument('--gt_src_path', type=str, default="./dataset/test/",
+                    help='testing clear image path, if not, set None')
+parser.add_argument('--noise_src_path', type=str, default="./dataset/test/color_sig50/",
+                    help='testing noisy image path')
+parser.add_argument('--test_items', default=["CBSD68", "Kodak24"],
+                    help='testing dataset')
+parser.add_argument('--result_png_path', type=str, default="./result/SADNET_color_sig50/",
+                    help='result directory')
+parser.add_argument('--ckpt_dir_test', type=str, default="./ckpt/SADNET_color_sig50/",
+                    help='model directory')
+parser.add_argument('--epoch_test', type=int, default=200,
+                    help='the epoch for testing')
 
 args = parser.parse_args()
