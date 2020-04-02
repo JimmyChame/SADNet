@@ -12,7 +12,10 @@ This is the official Pytorch implementation of "Spatial-Adaptive Network for Sin
 ### Installation
 The Deformable ConvNets V2 (DCNv2) module in our code adopts  [chengdazhi's implementation](https://github.com/chengdazhi/Deformable-Convolution-V2-PyTorch).
 
+You can use our compiled version or compile the code according to your machine and then replace `deform_conv.py` with our file.
+
 Please make sure your machine has a GPU, which is required for the DCNv2 module.
+
 
 ### Train
 1. Download the training dataset and use `gen_dataset_*.py` to package them in the h5py format.
