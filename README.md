@@ -24,7 +24,7 @@ python train.py
 ```
 
 ### Test
-1. Download the trained models from [Baidu Drive](https://pan.baidu.com/s/1RWiM3BQqPSTda4NYyi9bWQ)(4nbq) and place them in `/ckpt/`.
+1. Download the trained models from [Google Drive](https://drive.google.com/open?id=1ZTTPuVwTY_OwN-OHNy_S21JoGaQxnuup) or [Baidu Drive](https://pan.baidu.com/s/1RWiM3BQqPSTda4NYyi9bWQ) (4nbq) and place them in `/ckpt/`.
 2. Place the testing dataset in `/dataset/test/` or set the testing path in `option.py` to your own path.
 3. Set the parameters in `option.py` (eg. 'epoch_test', 'gray' and etc.)
 3. test the trained models:
