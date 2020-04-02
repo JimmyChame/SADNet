@@ -24,8 +24,9 @@ python train.py
 ```
 
 ### Test
-1. Download the trained models for our paper and place them in `/ckpt/`.
-2. Place the testing dataset in `/dataset/test/` or set testing parameters in `test.py`.
+1. Download the trained models from [Baidu Drive](https://pan.baidu.com/s/1RWiM3BQqPSTda4NYyi9bWQ)(4nbq) and place them in `/ckpt/`.
+2. Place the testing dataset in `/dataset/test/` or set the testing path in `option.py` to your own path.
+3. Set the parameters in `option.py` (eg. 'epoch_test', 'gray' and etc.)
 3. test the trained models:
 ```
 cd $SADNet_ROOT
