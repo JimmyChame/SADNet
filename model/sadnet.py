@@ -15,7 +15,8 @@ class ResBlock(nn.Module):
         super().__init__()
         self.in_channel = input_channel
         self.out_channel = output_channel
-        self.conv0 = nn.Conv2d(input_channel, output_channel, 1, 1)
+        if self.in_channel != self.out_channel:
+            self.conv0 = nn.Conv2d(input_channel, output_channel, 1, 1)
         self.conv1 = nn.Conv2d(output_channel, output_channel, 3, 1, 1)
         self.conv2 = nn.Conv2d(output_channel, output_channel, 3, 1, 1)
 
@@ -42,7 +43,8 @@ class RSABlock(nn.Module):
         super().__init__()
         self.in_channel = input_channel
         self.out_channel = output_channel
-        self.conv0 = nn.Conv2d(input_channel, output_channel, 1, 1)
+        if self.in_channel != self.out_channel:
+            self.conv0 = nn.Conv2d(input_channel, output_channel, 1, 1)
         self.dcnpack = DCN(output_channel, output_channel, 3, stride=1, padding=1, dilation=1, deformable_groups=8,
                             extra_offset_mask=True, offset_in_channel=offset_channel)
         self.conv1 = nn.Conv2d(output_channel, output_channel, 3, 1, 1)
@@ -65,10 +67,11 @@ class RSABlock(nn.Module):
 
 class OffsetBlock(nn.Module):
 
-    def __init__(self, input_channel=32, offset_channel=32):
+    def __init__(self, input_channel=32, offset_channel=32, last_offset=False):
         super().__init__()
         self.offset_conv1 = nn.Conv2d(input_channel, offset_channel, 3, 1, 1)  # concat for diff
-        self.offset_conv2 = nn.Conv2d(offset_channel*2, offset_channel, 3, 1, 1)  # concat for offset
+        if last_offset:
+            self.offset_conv2 = nn.Conv2d(offset_channel*2, offset_channel, 3, 1, 1)  # concat for offset
         self.offset_conv3 = nn.Conv2d(offset_channel, offset_channel, 3, 1, 1)
 
         self.lrelu = nn.LeakyReLU(negative_slope=0.2, inplace=True)
@@ -91,8 +94,6 @@ class OffsetBlock(nn.Module):
 class ContextBlock(nn.Module):
     def __init__(self, input_channel=32, output_channel=32, square=False):
         super().__init__()
-        self.in_channel = input_channel
-        self.out_channel = output_channel
         self.conv0 = nn.Conv2d(input_channel, output_channel, 1, 1)
         if square:
             self.conv1 = nn.Conv2d(output_channel, output_channel, 3, 1, 1, 1)
@@ -110,10 +111,7 @@ class ContextBlock(nn.Module):
         self.initialize_weights()
 
     def forward(self, x):
-        if self.in_channel != self.out_channel:
-            x_reduce = self.conv0(x)
-        else:
-            x_reduce = x
+        x_reduce = self.conv0(x)
         conv1 = self.lrelu(self.conv1(x_reduce))
         conv2 = self.lrelu(self.conv2(x_reduce))
         conv3 = self.lrelu(self.conv3(x_reduce))
@@ -144,22 +142,22 @@ class SADNET(nn.Module):
         self.res4 = ResBlock(n_channel*8, n_channel*8)
 
         self.context = ContextBlock(n_channel*8, n_channel*2, square=True)
-        self.offset4 = OffsetBlock(n_channel*8, offset_channel)
+        self.offset4 = OffsetBlock(n_channel*8, offset_channel, False)
         self.dres4 = RSABlock(n_channel*8, n_channel*8, offset_channel)
 
         self.up3 = nn.ConvTranspose2d(n_channel*8, n_channel*4, 2, 2)
         self.dconv3_1 = nn.Conv2d(n_channel*8, n_channel*4, 1, 1)
-        self.offset3 = OffsetBlock(n_channel*4, offset_channel)
+        self.offset3 = OffsetBlock(n_channel*4, offset_channel, True)
         self.dres3 = RSABlock(n_channel*4, n_channel*4, offset_channel)
 
         self.up2 = nn.ConvTranspose2d(n_channel*4, n_channel*2, 2, 2)
         self.dconv2_1 = nn.Conv2d(n_channel*4, n_channel*2, 1, 1)
-        self.offset2 = OffsetBlock(n_channel*2, offset_channel)
+        self.offset2 = OffsetBlock(n_channel*2, offset_channel, True)
         self.dres2 = RSABlock(n_channel*2, n_channel*2, offset_channel)
 
         self.up1 = nn.ConvTranspose2d(n_channel*2, n_channel, 2, 2)
         self.dconv1_1 = nn.Conv2d(n_channel*2, n_channel, 1, 1)
-        self.offset1 = OffsetBlock(n_channel, offset_channel)
+        self.offset1 = OffsetBlock(n_channel, offset_channel, True)
         self.dres1 = RSABlock(n_channel, n_channel, offset_channel)
 
         self.out = nn.Conv2d(n_channel, output_channel, 3, 1, 1)
