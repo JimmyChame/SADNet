@@ -141,7 +141,7 @@ class SADNET(nn.Module):
         self.down3 = nn.Conv2d(n_channel*4, n_channel*8, 2, 2)
         self.res4 = ResBlock(n_channel*8, n_channel*8)
 
-        self.context = ContextBlock(n_channel*8, n_channel*2, square=True)
+        self.context = ContextBlock(n_channel*8, n_channel*2, square=False)
         self.offset4 = OffsetBlock(n_channel*8, offset_channel, False)
         self.dres4 = RSABlock(n_channel*8, n_channel*8, offset_channel)
 
