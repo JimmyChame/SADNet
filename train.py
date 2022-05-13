@@ -144,6 +144,8 @@ def train():
                         mpimg.imsave(args.ckpt_dir+"img/%04d_denoised.png" % epoch, denoised[:,:,0])
                     else:
                         mpimg.imsave(args.ckpt_dir+"img/%04d_denoised.png" % epoch, denoised)
+    writer.close()
+    print('training finish')
 
 
 if __name__ == "__main__":
