@@ -41,6 +41,7 @@ python train.py
 cd $SADNet_ROOT
 python test.py
 ```
+Noting: for a fair comparison with previous methods, you'd better save the denoised images in PNG format and then use matlab functions to calculate psnr and ssim index.
 
 ## Citation
 If you find the code helpful in your research or work, please cite the following papers.
