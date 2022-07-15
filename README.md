@@ -12,6 +12,8 @@ This is the official Pytorch implementation of "**Spatial-Adaptive Network for S
 
 ## Get Started
 ### Installation
+**Update**：We implement Deformable ConvNets V2 on ```torchvision.ops.deform_conv2d```. If torchvision>=0.9.0 in your environment, you don't need follow the instructions below to install DCNv2.
+
 The Deformable ConvNets V2 (DCNv2) module in our code adopts  [chengdazhi's implementation](https://github.com/chengdazhi/Deformable-Convolution-V2-PyTorch).
 
 You can compile the code according to your machine. 
