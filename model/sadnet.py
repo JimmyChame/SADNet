@@ -3,10 +3,14 @@ import torch.nn as nn
 import torch.nn.init as init
 import torch.nn.functional as F
 import numpy as np
-try:
-    from dcn.deform_conv import ModulatedDeformConvPack2 as DCN
-except ImportError:
-    raise ImportError('Failed to import DCNv2 module.')
+from distutils.version import LooseVersion
+if LooseVersion(torchvision.__version__) >= LooseVersion('0.9.0'):
+    from model.deform_conv import ModulatedDeformableConv2d as DCN
+else:
+    try:
+        from dcn.deform_conv import ModulatedDeformConvPack2 as DCN
+    except ImportError:
+        raise ImportError('Failed to import DCNv2 module.')
 
 #==============================================================================#
 class ResBlock(nn.Module):
