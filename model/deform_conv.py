@@ -5,6 +5,8 @@ import torch.nn as nn
 import torch.nn.init as init
 from torchvision.ops import deform_conv2d
 import math
+import logging
+logger = logging.getLogger('base')
 
 class ModulatedDeformableConv2d(nn.Module):
     def __init__(self,
