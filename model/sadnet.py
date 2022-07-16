@@ -4,6 +4,7 @@ import torch.nn.init as init
 import torch.nn.functional as F
 import numpy as np
 from distutils.version import LooseVersion
+import torchvision
 if LooseVersion(torchvision.__version__) >= LooseVersion('0.9.0'):
     from model.deform_conv import ModulatedDeformableConv2d as DCN
 else:
