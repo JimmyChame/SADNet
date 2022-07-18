@@ -7,7 +7,8 @@ from torch.utils.data import DataLoader
 from torch.autograd import Variable
 from tensorboardX import SummaryWriter
 import matplotlib.image as mpimg
-from skimage.measure import compare_psnr, compare_ssim
+#from skimage.measure import compare_psnr, compare_ssim
+from metrics import compare_psnr, compare_ssim
 
 from option import args
 from utils import *
