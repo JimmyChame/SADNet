@@ -1,7 +1,8 @@
 import os, time, glob
 import numpy as np
 from imageio import imread, imwrite
-from skimage.measure import compare_psnr, compare_ssim
+#from skimage.measure import compare_psnr, compare_ssim
+from metrics import compare_psnr, compare_ssim
 import torch
 import torchvision.transforms as transforms
 
@@ -93,11 +94,16 @@ def evaluate_net():
             if args.gt_src_path:
 
                 psnr[i] += compare_psnr(clean, rgb)
-
+                if torch.cuda.is_available():
+                    ssim[i] += compare_ssim(clean, rgb, device='cuda')
+                esle:
+                    ssim[i] += compare_ssim(clean, rgb)
+                '''
                 if clean.ndim == 2:
                     ssim[i] += compare_ssim(clean, rgb)
                 elif clean.ndim == 3:
                     ssim[i] += compare_ssim(clean, rgb, multichannel=True)
+                '''
 
         test_time[i] = test_time[i] / (len(in_files)-1)
         if args.gt_src_path:
