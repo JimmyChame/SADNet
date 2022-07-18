@@ -96,7 +96,7 @@ def evaluate_net():
                 psnr[i] += compare_psnr(clean, rgb)
                 if torch.cuda.is_available():
                     ssim[i] += compare_ssim(clean, rgb, device='cuda')
-                esle:
+                else:
                     ssim[i] += compare_ssim(clean, rgb)
                 '''
                 if clean.ndim == 2:
